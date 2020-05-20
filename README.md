@@ -29,7 +29,7 @@ or
      $  npm run tslint
 Test
 
-    npm run test
+     $  npm run test
 4 - Run app
 
     $  cp .env.example .env
