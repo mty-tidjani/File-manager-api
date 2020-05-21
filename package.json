@@ -2,7 +2,7 @@
   "name": "file-api-service",
   "version": "1.0.0",
   "description": "A service to manage file: Upload, dowload, stream and resize(images and videos on)",
-  "main": "src/app.js",
+  "main": "src/app.js", 
   "scripts": {
     "tsc": "tsc",
     "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/app.ts",
