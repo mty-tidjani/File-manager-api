@@ -11,6 +11,7 @@ This is an api for uploading, streaming and downloading files. Here I assume it 
  6. Winston
  7. ApiDoc
  8. FFMPEG
+ 9. Multer
 
 ## Start project
 1 - Clone project
