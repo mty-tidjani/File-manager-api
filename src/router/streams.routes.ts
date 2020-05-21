@@ -1,13 +1,14 @@
 import { StreamController } from '../controllers/streamController';
+import { Router } from 'express';
 
 class StreamRoutes {
-  public static initRouter(router: any) {
+  public static initRouter(router: Router) {
 
-    router.use('/img', StreamController.images);
+    router.get('/img', StreamController.images);
 
-    router.use('/play', StreamController.videos);
+    router.get('/play', StreamController.videos);
 
-    router.use('/doc', StreamController.documents);
+    router.get('/doc', StreamController.documents);
 
     return router;
   }
