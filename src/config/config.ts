@@ -1,22 +1,10 @@
-class Config {
-  private processor : NodeJS.Process;
+require('dotenv').config();
 
-  env: any;
+const ev = process.env;
 
-  port: number;
+const config = {
+  port: ev.APP_PORT,
+  logDir: ev.LOG_DIR,
+};
 
-  logDir: string;
-
-  constructor(process: NodeJS.Process) {
-    this.processor = process;
-  }
-
-  getConfig() {
-    this.env = this.processor ? this.processor.env : process.env;
-    this.port = this.env.APP_PORT;
-    this.logDir = this.env.LOG_DIR;
-    return this;
-  }
-}
-
-export  { Config };
+export default config;

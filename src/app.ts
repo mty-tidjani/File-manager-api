@@ -1,11 +1,13 @@
 import express from 'express';
-import { Config } from './config/config';
+import config from './config/config';
+import { AppRoutes } from './router';
 
-require('dotenv').config();
+
+const routes = AppRoutes.initRoutes();
 
 const app = express();
 
-const config = new Config(process).getConfig();
+app.use(routes);
 
 app.listen(config.port, () => {
   console.log(`File Service API up at http://localhost:${config.port}.`);
