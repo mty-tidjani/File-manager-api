@@ -15,16 +15,31 @@ class StreamController{
   public static images = async (req: Request, res: Response<any>, next: NextFunction) => {
     const img = req.params.img;
     const basePath = './uploads/images/';
-    console.log('img', img);
-    if (!fs.existsSync(basePath + img)) res.send('File not found')
-    const data = await sharp(basePath + img)
-    .resize({
-      height: 300,
-      width: 300,
-      fit: 'cover' })
-    .withMetadata()
-    .toFile('./uploads/images/thanos_out_cover.jpg');
-    return res.sendFile(path.join(__dirname, '../../uploads/images/thanos.jpg'));
+    const { h, w, fit } = req.query;
+    console.log('img', img, h, w, fit, typeof(h), isNaN(h), isNaN(300));
+    if (!fs.existsSync(basePath + img)) return res.send('File not found');
+    const options: any = {};
+    let filename = img;
+    if (w && !isNaN(w)) {
+      options.width = Number(w);
+      filename = `${w}x${filename}`;
+    }
+    if (h && !isNaN(h)) {
+      options.height = Number(h);
+      filename = `${h}x${filename}`;
+    }
+    if (fit && fit === 'crop') {
+      options.fit = 'cover';
+      filename = `crop_${filename}`;
+    }
+
+    if (!fs.existsSync(basePath + filename)) {
+      await sharp(basePath + img)
+        .resize(options)
+        .withMetadata()
+        .toFile(basePath + filename);
+    }
+    return res.sendFile(path.join(__dirname, `../.${basePath + filename}`));
   }
 
   public static documents = (req: Request, res: Response<any>, next: NextFunction) => {
