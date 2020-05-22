@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import sharp from 'sharp';
+import path from 'path';
+import fs from 'fs';
 
 class StreamController{
   public static stream = (req: Request, res: Response<any>, next: NextFunction) => {
@@ -10,14 +12,19 @@ class StreamController{
     return res.send('Ready to Stream videos');
   }
 
-  public static images = (req: Request, res: Response<any>, next: NextFunction) => {
-    sharp(input)
-    .resize({ height: 100 })
-    .toBuffer()
-    .then(data => {
-      // 100 pixels high, auto-scaled width
-    });
-    return res.send('Ready to Stream images');
+  public static images = async (req: Request, res: Response<any>, next: NextFunction) => {
+    const img = req.params.img;
+    const basePath = './uploads/images/';
+    console.log('img', img);
+    if (!fs.existsSync(basePath + img)) res.send('File not found')
+    const data = await sharp(basePath + img)
+    .resize({
+      height: 300,
+      width: 300,
+      fit: 'cover' })
+    .withMetadata()
+    .toFile('./uploads/images/thanos_out_cover.jpg');
+    return res.sendFile(path.join(__dirname, '../../uploads/images/thanos.jpg'));
   }
 
   public static documents = (req: Request, res: Response<any>, next: NextFunction) => {

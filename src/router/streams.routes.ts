@@ -4,7 +4,7 @@ import { Router } from 'express';
 class StreamRoutes {
   public static initRouter(router: Router) {
 
-    router.get('/img', StreamController.images);
+    router.get('/img/:img', StreamController.images);
 
     router.get('/play', StreamController.videos);
 

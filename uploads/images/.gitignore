@@ -1,3 +1,4 @@
 #Not versioning uploaded files but keeping the directory
 *
 !.gitignore
+!thanos.jpg
