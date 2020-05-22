@@ -1,0 +1,3 @@
+#Not versioning uploaded files but keeping the directory
+*
+!.gitignore
