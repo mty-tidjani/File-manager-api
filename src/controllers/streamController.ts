@@ -35,14 +35,21 @@ class StreamController{
       filename = `crop_${filename}`;
     }
 
-    //if (!fs.existsSync(basePath + filename)) {
+    if (!fs.existsSync(basePath + filename)) {
       options = await optimize(options, path.join(__dirname, `../.${basePath + img}`));
       console.log(options);
-      await sharp(basePath + img)
+      let realname = img;
+      if (options.width) realname = `${options.width}x${realname}`;
+      if (options.height) realname = `${options.height}x${realname}`;
+      if (options.fit) realname = `${options.fit}_${realname}`;
+      if (!fs.existsSync(basePath + realname)) {
+        await sharp(basePath + img)
         .resize(options)
         .withMetadata()
-        .toFile(basePath + filename);
-    //}
+        .toFile(basePath + realname);
+      }
+      filename = realname;
+    }
     return res.sendFile(path.join(__dirname, `../.${basePath + filename}`));
   }
 
