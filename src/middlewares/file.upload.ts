@@ -11,25 +11,6 @@ const imgStorage = multer.diskStorage({
   },
 });
 
-const profilImgStorage = multer.diskStorage({
-  destination: (req: Request, file: Express.Multer.File, cb: any) => {
-    cb(null, 'uploads/images/profil');
-  },
-  filename: (req: Request, file: Express.Multer.File, cb: any) => {
-    cb(null, `${Date.now()}_${file.originalname.split(' ').join('_').toLowerCase()}`);
-  },
-});
-
-
-const placeStorage = multer.diskStorage({
-  destination: (req: Request, file: Express.Multer.File, cb: any) => {
-    cb(null, 'uploads/images/places');
-  },
-  filename: (req: Request, file: Express.Multer.File, cb: any) => {
-    cb(null, `${Date.now()}_${file.originalname.split(' ').join('_').toLowerCase()}`);
-  },
-});
-
 const imgFilter = (req: Request, file: Express.Multer.File, cb: any) => {
   const resp = ['image/png', 'image/jpg', 'image/jpeg'].indexOf(file.mimetype) >= 0;
   cb(null, resp);
@@ -50,15 +31,17 @@ const vidFilter = (req: Request, file: Express.Multer.File, cb: any) => {
   cb(null, resp);
 };
 
+const docStorage = multer.diskStorage({
+  destination: (req: Request, file: Express.Multer.File, cb: any) => {
+    cb(null, 'uploads/docs/');
+  },
+  filename: (req: Request, file: Express.Multer.File, cb: any) => {
+    cb(null, `${Date.now()}_${file.originalname.split(' ').join('_').toLowerCase()}`);
+  },
+});
 
-const uploader: any = {};
+export const imgUpload = multer({ storage: imgStorage, fileFilter: imgFilter });
 
-uploader.imgUpload = multer({ storage: imgStorage, fileFilter: imgFilter });
+export const vidUpload = multer({ storage: vidStorage, fileFilter: vidFilter });
 
-uploader.profileImgUpload = multer({ storage: profilImgStorage, fileFilter: imgFilter });
-
-uploader.placeImgUpload = multer({ storage: placeStorage, fileFilter: imgFilter });
-
-uploader.vidUpload = multer({ storage: vidStorage, fileFilter: vidFilter });
-
-export default uploader;
+export const docUpload = multer({ storage: docStorage });
