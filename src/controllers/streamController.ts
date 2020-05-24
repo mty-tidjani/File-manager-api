@@ -11,7 +11,10 @@ class StreamController{
   }
 
   public static videos = (req: Request, res: Response<any>, next: NextFunction) => {
-    return res.send('Ready to Stream videos');
+    const vid = req.params.vid;
+    const basePath = './uploads/videos/';
+    if (!fs.existsSync(basePath + vid)) return res.status(404).send('File not found');
+    return res.sendFile(path.join(__dirname, `../.${basePath + vid}`));
   }
 
   public static images = async (req: any, res: Response<any>, next: NextFunction) => {
@@ -19,7 +22,7 @@ class StreamController{
     const basePath = './uploads/images/';
     const { h, w, fit } = req.query;
     console.log('img', img, h, w, fit, typeof(h), isNaN(h), isNaN(300));
-    if (!fs.existsSync(basePath + img)) return res.send('File not found');
+    if (!fs.existsSync(basePath + img)) return res.status(404).send('File not found');
     let options: any = {};
     let filename = img;
     if (w && !isNaN(w)) {
@@ -54,7 +57,10 @@ class StreamController{
   }
 
   public static documents = (req: Request, res: Response<any>, next: NextFunction) => {
-    return res.send('Ready to Stream documents (every thing different from videos and images)');
+    const doc = req.params.doc;
+    const basePath = './uploads/docs/';
+    if (!fs.existsSync(basePath + doc)) return res.status(404).send('File not found');
+    return res.sendFile(path.join(__dirname, `../.${basePath + doc}`));
   }
 }
 

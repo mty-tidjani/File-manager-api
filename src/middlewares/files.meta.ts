@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import ffmpegStatic from 'ffmpeg-static';
 import ffprobeStatic from 'ffprobe-static';
 import fluentFfmpeg from 'fluent-ffmpeg';
