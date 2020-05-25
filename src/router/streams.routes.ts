@@ -5,15 +5,18 @@ class StreamRoutes {
   public static initRouter(router: Router) {
 
     router.use('/img**/:img', (req: Request, res: Response<any>, next: NextFunction) => {
-      console.log(req.url);
-      console.log(req.baseUrl);
-      console.log(req.originalUrl);
+      // Todo: take into consideration subpath.
+      // console.log(req.url);
+      // console.log(req.baseUrl);
+      // console.log(req.originalUrl);
       next();
     } ,        StreamController.images);
 
-    router.get('/play', StreamController.videos);
+    router.get('/play**/:vid', StreamController.videos);
 
-    router.get('/doc', StreamController.documents);
+    router.get('/thumb**/:thumb', StreamController.thumbnail);
+
+    router.get('/doc**/:doc', StreamController.documents);
 
     return router;
   }
