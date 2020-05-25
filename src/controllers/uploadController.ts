@@ -1,16 +1,18 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import Medium from '../model/Medium';
 
 class UploadController {
 
-  public static upload = (req: Request, res: Response<any>, next: NextFunction) => {
-    return res.send('We are ready to upload.');
-  }
+  // public static upload = (req: Request, res: Response<any>, next: NextFunction) => {
+  //   return res.send('We are ready to upload.');
+  // }
 
   private static saveMany = async (req: any, res: Response<any>, next: NextFunction, fileType = 'video') => {
     try {
       const tempImgs: any[] = [];
+
       const basePath = fileType === 'video' ? '/play/' : '/img/';
+
       req.files.forEach((file: any) => {
         const temp = {
           discr: fileType,
@@ -25,13 +27,18 @@ class UploadController {
           thumb_url: file.meta.thumbnail ? `/thumb/${file.meta.thumbnail}` : null,
           vid_length: file.meta.duration,
         };
+
         tempImgs.push(temp);
       });
+
       const data = await Medium.create(tempImgs);
-      // console.log(some);
+
       return res.status(200).json({ data });
+
     } catch (err) {
+
       return next(err);
+
     }
   }
 
@@ -62,19 +69,27 @@ class UploadController {
   }
 
   public static uploadImage = async (req: any, res: Response<any>, next: NextFunction) => {
+
     await UploadController.saveOne(req, res, next, 'image');
+
   }
 
   public static uploadImages = async (req: any, res: Response<any>, next: NextFunction) => {
+
     await UploadController.saveMany(req, res, next, 'image');
+
   }
 
   public static uploadVideo = async (req: any, res: Response<any>, next: NextFunction) => {
+
     await UploadController.saveOne(req, res, next);
+
   }
 
   public static uploadVideos = async (req: any, res: Response<any>, next: NextFunction) => {
+
     await UploadController.saveMany(req, res, next);
+
   }
 }
 
