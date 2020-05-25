@@ -23,4 +23,5 @@ const mediumSchema = new Schema({
   },
 },                              { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
-model('Medium', mediumSchema);
+
+export default model('Medium', mediumSchema);
