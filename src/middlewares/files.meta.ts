@@ -36,7 +36,7 @@ export const loadSingleMeta = (type = 'video') => async (req: any, res: Response
   const meta: any = await getMetadata(file);
   if (type === 'video') meta.thumbnail = await saveThumb(file);
   // console.log(proc);
-  req.metadata = meta;
+  file.meta = meta;
   return next();
 };
 
@@ -56,7 +56,7 @@ export const loadManyMeta = (type = 'video') => async (req: any, res: Response<a
   fluentFfmpeg.setFfprobePath(ffprobeStatic.path);
   for (const file of files) {
     file.meta = await getMetadata(file);
-    if (type === 'video') file.thumbnail = await saveThumb(file);
+    if (type === 'video') file.meta = await saveThumb(file);
   }
   return next();
 };
