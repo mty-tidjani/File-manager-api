@@ -72,7 +72,7 @@ class StreamController{
     const doc = req.params.doc;
 
     const basePath = './uploads/docs/';
-    
+
     if (!fs.existsSync(basePath + doc)) return res.status(404).send('File not found');
 
     return res.sendFile(path.join(__dirname, `../.${basePath + doc}`));
@@ -80,7 +80,7 @@ class StreamController{
 
   public static thumbnail = (req: Request, res: Response<any>, next: NextFunction) => {
     const thumb = req.params.thumb;
-    
+
     const basePath = './uploads/videos/thumbs';
 
     if (!fs.existsSync(basePath + thumb)) return res.status(404).send('File not found');
