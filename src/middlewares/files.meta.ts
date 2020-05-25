@@ -29,7 +29,7 @@ const getMetadata = (file: Express.Multer.File) => new Promise((resolve) => {
   });
 });
 
-export const loadMetadata = (type = 'video') => async (req: any, res: Response<any>, next: NextFunction) => {
+export const loadSingleMeta = (type = 'video') => async (req: any, res: Response<any>, next: NextFunction) => {
   const { file } = req;
   fluentFfmpeg.setFfmpegPath(ffmpegStatic);
   fluentFfmpeg.setFfprobePath(ffprobeStatic.path);
@@ -46,6 +46,17 @@ export const loadImagesMeta = async (req: any, res: Response<any>, next: NextFun
 
   for (const file of req.files) {
     file.meta = await getMetadata(file);
+  }
+  return next();
+};
+
+export const loadManyMeta = (type = 'video') => async (req: any, res: Response<any>, next: NextFunction) => {
+  const { files } = req;
+  fluentFfmpeg.setFfmpegPath(ffmpegStatic);
+  fluentFfmpeg.setFfprobePath(ffprobeStatic.path);
+  for (const file of files) {
+    file.meta = await getMetadata(file);
+    if (type === 'video') file.thumbnail = await saveThumb(file);
   }
   return next();
 };
