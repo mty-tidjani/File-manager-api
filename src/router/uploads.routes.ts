@@ -6,15 +6,13 @@ import { loadManyMeta, loadSingleMeta } from '../middlewares/files.meta';
 class UploadRoutes {
   public static initRouter(router: Router) {
 
-    router.post('/uploads', UploadController.upload);
+    router.post('/uploads/image', imgUpload.single('image'), loadSingleMeta('image'), UploadController.uploadImage);
 
-    router.post('/uploads/image', imgUpload.single('image'), loadSingleMeta('image'), UploadController.upload);
+    router.post('/uploads/images', imgUpload.array('image'), loadManyMeta('image'), UploadController.uploadImages);
 
-    router.post('/uploads/images', imgUpload.array('image'), loadManyMeta('image'), UploadController.upload);
+    router.post('/uploads/video', vidUpload.single('video'), loadSingleMeta('video'), UploadController.uploadVideo);
 
-    router.post('/uploads/video', vidUpload.single('video'), loadSingleMeta('video'), UploadController.upload);
-
-    router.post('/uploads/videos', vidUpload.array('video'), loadManyMeta('video'), UploadController.upload);
+    router.post('/uploads/videos', vidUpload.array('video'), loadManyMeta('video'), UploadController.uploadVideos);
 
     router.post('/uploads/document', docUpload.single('file'), UploadController.upload);
 

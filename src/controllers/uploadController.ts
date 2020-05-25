@@ -60,6 +60,22 @@ class UploadController {
       return next(err);
     }
   }
+
+  public static uploadImage = async (req: any, res: Response<any>, next: NextFunction) => {
+    await UploadController.saveOne(req, res, next, 'image');
+  }
+
+  public static uploadImages = async (req: any, res: Response<any>, next: NextFunction) => {
+    await UploadController.saveMany(req, res, next, 'image');
+  }
+
+  public static uploadVideo = async (req: any, res: Response<any>, next: NextFunction) => {
+    await UploadController.saveOne(req, res, next);
+  }
+
+  public static uploadVideos = async (req: any, res: Response<any>, next: NextFunction) => {
+    await UploadController.saveMany(req, res, next);
+  }
 }
 
 export { UploadController };
