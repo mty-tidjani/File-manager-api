@@ -27,6 +27,10 @@ class StreamController{
 
     const dirPath = `./uploads/images${reqPath}`;
 
+    const cacheDir = `./uploads/images/.cache${reqPath}`;
+
+    let inUsePath = dirPath;
+
     const { h, w, fit } = req.query;
 
     if (!fs.existsSync(dirPath + img)) return res.status(404).send('File not found');
@@ -49,6 +53,8 @@ class StreamController{
       filename = `crop_${filename}`;
     }
 
+    if (filename !== img) inUsePath = cacheDir;
+
     if (!fs.existsSync(dirPath + filename)) {
 
       options = await optimize(options, path.join(__dirname, `../.${dirPath + img}`));
@@ -61,17 +67,17 @@ class StreamController{
 
       if (options.fit) realname = `${options.fit}_${realname}`;
 
-      if (!fs.existsSync(dirPath + realname)) {
+      if (!fs.existsSync(inUsePath + realname)) {
         await sharp(dirPath + img)
         .resize(options)
         .withMetadata()
-        .toFile(dirPath + realname);
+        .toFile(inUsePath + realname);
       }
 
       filename = realname;
     }
 
-    return res.sendFile(path.join(__dirname, `../.${dirPath + filename}`));
+    return res.sendFile(path.join(__dirname, `../.${inUsePath + filename}`));
   }
 
   public static documents = (req: any, res: Response<any>, next: NextFunction) => {
