@@ -4,8 +4,11 @@ import ffprobeStatic from 'ffprobe-static';
 import fluentFfmpeg from 'fluent-ffmpeg';
 
 const ev = process.env;
+
 fluentFfmpeg.setFfmpegPath(ffmpegStatic);
+
 fluentFfmpeg.setFfprobePath(ffprobeStatic.path);
+
 const config = {
   port: ev.APP_PORT,
   logDir: ev.LOG_DIR,

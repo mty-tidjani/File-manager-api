@@ -14,9 +14,9 @@ class UploadRoutes {
 
     router.post('/uploads/videos', vidUpload.array('video'), loadManyMeta('video'), UploadController.uploadVideos);
 
-    router.post('/uploads/document', docUpload.single('file'), UploadController.upload);
+    // router.post('/uploads/document', docUpload.single('file'), UploadController.upload);
 
-    router.post('/uploads/documents', docUpload.array('files'), UploadController.upload);
+    // router.post('/uploads/documents', docUpload.array('files'), UploadController.upload);
 
     return router;
   }

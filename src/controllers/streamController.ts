@@ -11,19 +11,25 @@ class StreamController{
 
     const vid = req.params.vid;
 
-    const basePath = './uploads/videos/';
+    const reqPath: string = req.baseUrl.split('/img').join('').split(vid).join('');
 
-    if (!fs.existsSync(basePath + vid)) return res.status(404).send('File not found');
+    const dirPath = `./uploads/videos${reqPath}`;
 
-    return res.sendFile(path.join(__dirname, `../.${basePath + vid}`));
+    if (!fs.existsSync(dirPath + vid)) return res.status(404).send('File not found');
+
+    return res.sendFile(path.join(__dirname, `../.${dirPath + vid}`));
   }
 
   public static images = async (req: any, res: Response<any>, next: NextFunction) => {
     const img = req.params.img;
-    const basePath = './uploads/images/';
+
+    const reqPath: string = req.baseUrl.split('/img').join('').split(img).join('');
+
+    const dirPath = `./uploads/images${reqPath}`;
+
     const { h, w, fit } = req.query;
 
-    if (!fs.existsSync(basePath + img)) return res.status(404).send('File not found');
+    if (!fs.existsSync(dirPath + img)) return res.status(404).send('File not found');
 
     let options: any = {};
     let filename = img;
@@ -43,9 +49,9 @@ class StreamController{
       filename = `crop_${filename}`;
     }
 
-    if (!fs.existsSync(basePath + filename)) {
+    if (!fs.existsSync(dirPath + filename)) {
 
-      options = await optimize(options, path.join(__dirname, `../.${basePath + img}`));
+      options = await optimize(options, path.join(__dirname, `../.${dirPath + img}`));
 
       let realname = img;
 
@@ -55,37 +61,37 @@ class StreamController{
 
       if (options.fit) realname = `${options.fit}_${realname}`;
 
-      if (!fs.existsSync(basePath + realname)) {
-        await sharp(basePath + img)
+      if (!fs.existsSync(dirPath + realname)) {
+        await sharp(dirPath + img)
         .resize(options)
         .withMetadata()
-        .toFile(basePath + realname);
+        .toFile(dirPath + realname);
       }
 
       filename = realname;
     }
 
-    return res.sendFile(path.join(__dirname, `../.${basePath + filename}`));
+    return res.sendFile(path.join(__dirname, `../.${dirPath + filename}`));
   }
 
   public static documents = (req: Request, res: Response<any>, next: NextFunction) => {
     const doc = req.params.doc;
 
-    const basePath = './uploads/docs/';
+    const dirPath = './uploads/docs/';
 
-    if (!fs.existsSync(basePath + doc)) return res.status(404).send('File not found');
+    if (!fs.existsSync(dirPath + doc)) return res.status(404).send('File not found');
 
-    return res.sendFile(path.join(__dirname, `../.${basePath + doc}`));
+    return res.sendFile(path.join(__dirname, `../.${dirPath + doc}`));
   }
 
   public static thumbnail = (req: Request, res: Response<any>, next: NextFunction) => {
     const thumb = req.params.thumb;
 
-    const basePath = './uploads/videos/thumbs';
+    const dirPath = './uploads/videos/thumbs';
 
-    if (!fs.existsSync(basePath + thumb)) return res.status(404).send('File not found');
+    if (!fs.existsSync(dirPath + thumb)) return res.status(404).send('File not found');
 
-    return res.sendFile(path.join(__dirname, `../.${basePath + thumb}`));
+    return res.sendFile(path.join(__dirname, `../.${dirPath + thumb}`));
   }
 
 
