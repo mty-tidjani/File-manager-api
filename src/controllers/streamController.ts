@@ -7,11 +7,11 @@ import { optimize } from '../utils/imgUtils';
 
 class StreamController{
 
-  public static videos = (req: Request, res: Response<any>, next: NextFunction) => {
+  public static videos = (req: any, res: Response<any>, next: NextFunction) => {
 
     const vid = req.params.vid;
 
-    const reqPath: string = req.baseUrl.split('/img').join('').split(vid).join('');
+    const reqPath: string = req.baseUrl.substr(req.baseL).split(vid).join('');
 
     const dirPath = `./uploads/videos${reqPath}`;
 
@@ -23,7 +23,7 @@ class StreamController{
   public static images = async (req: any, res: Response<any>, next: NextFunction) => {
     const img = req.params.img;
 
-    const reqPath: string = req.baseUrl.split('/img').join('').split(img).join('');
+    const reqPath: string = req.baseUrl.substr(req.baseL).split(img).join('');
 
     const dirPath = `./uploads/images${reqPath}`;
 
@@ -74,20 +74,24 @@ class StreamController{
     return res.sendFile(path.join(__dirname, `../.${dirPath + filename}`));
   }
 
-  public static documents = (req: Request, res: Response<any>, next: NextFunction) => {
+  public static documents = (req: any, res: Response<any>, next: NextFunction) => {
     const doc = req.params.doc;
 
-    const dirPath = './uploads/docs/';
+    const reqPath: string = req.baseUrl.substr(req.baseL).split(doc).join('');
+
+    const dirPath = `./uploads/docs${reqPath}`;
 
     if (!fs.existsSync(dirPath + doc)) return res.status(404).send('File not found');
 
     return res.sendFile(path.join(__dirname, `../.${dirPath + doc}`));
   }
 
-  public static thumbnail = (req: Request, res: Response<any>, next: NextFunction) => {
+  public static thumbnail = (req: any, res: Response<any>, next: NextFunction) => {
     const thumb = req.params.thumb;
 
-    const dirPath = './uploads/videos/thumbs';
+    const reqPath: string = req.baseUrl.substr(req.baseL).split(thumb).join('');
+
+    const dirPath = `./uploads/docs${reqPath}`;
 
     if (!fs.existsSync(dirPath + thumb)) return res.status(404).send('File not found');
 
