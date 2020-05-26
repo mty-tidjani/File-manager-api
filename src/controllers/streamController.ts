@@ -91,7 +91,7 @@ class StreamController{
 
     const reqPath: string = req.baseUrl.substr(req.baseL).split(thumb).join('');
 
-    const dirPath = `./uploads/docs${reqPath}`;
+    const dirPath = `./uploads/${reqPath}`;
 
     if (!fs.existsSync(dirPath + thumb)) return res.status(404).send('File not found');
 
