@@ -55,7 +55,7 @@ class StreamController{
 
     if (filename !== img) inUsePath = cacheDir;
 
-    if (!fs.existsSync(dirPath + filename)) {
+    if (!fs.existsSync(inUsePath + filename)) {
 
       options = await optimize(options, path.join(__dirname, `../.${dirPath + img}`));
 
@@ -68,6 +68,8 @@ class StreamController{
       if (options.fit) realname = `${options.fit}_${realname}`;
 
       if (!fs.existsSync(inUsePath + realname)) {
+        // Create directory to avoid exepction
+        if (!fs.existsSync(inUsePath)) fs.mkdirSync(inUsePath);
         await sharp(dirPath + img)
         .resize(options)
         .withMetadata()
