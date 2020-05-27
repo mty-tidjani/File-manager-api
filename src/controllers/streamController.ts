@@ -4,9 +4,28 @@ import path from 'path';
 import fs from 'fs';
 
 import { optimize } from '../utils/imgUtils';
-
+/**
+ *
+ * @api {class}
+ *
+ */
 class StreamController{
-
+  /**
+   *
+   * @api {method} /vid/:vid Video_stream
+   * @apiName file-service-api
+   * @apiGroup Stream
+   * @apiVersion  1.0.0
+   *
+   * @apiParam  {Request} req 'Express request object'
+   *
+   * @apiParam  {Response} res 'Express response object'
+   *
+   * @apiParam  {NextFunction} next 'Express next Function'
+   *
+   * @apiSuccess (200) {file} file_requested 'video file'
+   *
+   */
   public static videos = (req: any, res: Response<any>, next: NextFunction) => {
 
     const vid = req.params.vid;
@@ -20,6 +39,22 @@ class StreamController{
     return res.sendFile(path.join(__dirname, `../.${dirPath + vid}`));
   }
 
+  /**
+   *
+   * @api {method} /vid/:vid image_stream
+   * @apiName file-service-api
+   * @apiGroup Stream
+   * @apiVersion  1.0.0
+   *
+   * @apiParam  {Request} req 'Express request object'
+   *
+   * @apiParam  {Response} res 'Express response object'
+   *
+   * @apiParam  {NextFunction} next 'Express next Function'
+   *
+   * @apiSuccess (200) {file} file_requested 'image file'
+   *
+   */
   public static images = async (req: any, res: Response<any>, next: NextFunction) => {
     const img = req.params.img;
 
@@ -82,6 +117,22 @@ class StreamController{
     return res.sendFile(path.join(__dirname, `../.${inUsePath + filename}`));
   }
 
+  /**
+   *
+   * @api {method} /doc/:doc Video_stream
+   * @apiName file-service-api
+   * @apiGroup Stream
+   * @apiVersion  1.0.0
+   *
+   * @apiParam  {Request} req 'Express request object'
+   *
+   * @apiParam  {Response} res 'Express response object'
+   *
+   * @apiParam  {NextFunction} next 'Express next Function'
+   *
+   * @apiSuccess (200) {file} file_requested 'document file'
+   *
+   */
   public static documents = (req: any, res: Response<any>, next: NextFunction) => {
     const doc = req.params.doc;
 
@@ -94,6 +145,22 @@ class StreamController{
     return res.sendFile(path.join(__dirname, `../.${dirPath + doc}`));
   }
 
+  /**
+   *
+   * @api {method} /vid/:vid Video_stream
+   * @apiName file-service-api
+   * @apiGroup Stream
+   * @apiVersion  1.0.0
+   *
+   * @apiParam  {Request} req 'Express request object'
+   *
+   * @apiParam  {Response} res 'Express response object'
+   *
+   * @apiParam  {NextFunction} next 'Express next Function'
+   *
+   * @apiSuccess (200) {file} file_requested 'video file'
+   *
+   */
   public static thumbnail = (req: any, res: Response<any>, next: NextFunction) => {
     const thumb = req.params.thumb;
 
