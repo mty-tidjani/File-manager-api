@@ -1,0 +1,7 @@
+{
+  "name": "example",
+  "version": "0.1.0",
+  "description": "File Service Api",
+  "title": "File Service EndPoints",
+  "url" : "http://localhost:4040"
+}
