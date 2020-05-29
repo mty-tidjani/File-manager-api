@@ -43,6 +43,5 @@ Modify/Update project to fit your Project needs and...
     $  docker-compose up
 
 
-**- Tidjani** :  Thank you!
+**- Tidjani** :  Thank you! 
 
-**- You**: you're welcome.

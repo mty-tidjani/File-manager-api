@@ -6,7 +6,7 @@ import fs from 'fs';
 import { optimize } from '../utils/imgUtils';
 /**
  *
- * @api {class}
+ * @class
  *
  */
 class StreamController{
@@ -119,7 +119,7 @@ class StreamController{
 
   /**
    *
-   * @api {method} /doc/:doc Video_stream
+   * @api {method} /doc/:doc Document Stream
    * @apiName file-service-api
    * @apiGroup Stream
    * @apiVersion  1.0.0
@@ -147,7 +147,7 @@ class StreamController{
 
   /**
    *
-   * @api {method} /vid/:vid Video_stream
+   * @api {method} /vid/:vid Video Thumbnail Stream
    * @apiName file-service-api
    * @apiGroup Stream
    * @apiVersion  1.0.0

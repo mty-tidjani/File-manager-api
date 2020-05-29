@@ -1,15 +1,5 @@
 [
   {
-    "type": "",
-    "url": "{class}",
-    "title": "",
-    "version": "0.0.0",
-    "filename": "src/controllers/streamController.ts",
-    "group": "/home/lenovo/Documents/PERSONAL/file-api-service/src/controllers/streamController.ts",
-    "groupTitle": "/home/lenovo/Documents/PERSONAL/file-api-service/src/controllers/streamController.ts",
-    "name": "Class"
-  },
-  {
     "type": "method",
     "url": "/vid/:vid",
     "title": "Video_stream",
@@ -112,7 +102,7 @@
   {
     "type": "method",
     "url": "/doc/:doc",
-    "title": "Video_stream",
+    "title": "Document Stream",
     "name": "file-service-api",
     "group": "Stream",
     "version": "1.0.0",
@@ -162,7 +152,7 @@
   {
     "type": "method",
     "url": "/vid/:vid",
-    "title": "Video_stream",
+    "title": "Video Thumbnail Stream",
     "name": "file-service-api",
     "group": "Stream",
     "version": "1.0.0",
