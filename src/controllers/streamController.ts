@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 
 import { optimize } from '../utils/imgUtils';
+
 /**
  *
  * @class
@@ -17,16 +18,14 @@ class StreamController{
    * @apiGroup Stream
    * @apiVersion  1.0.0
    *
-   * @apiParam  {Request} req 'Express request object'
+   * @apiParam  {Request} req Express request object
    *
-   * @apiParam  {Response} res 'Express response object'
+   * @apiParam  {Response} res Express response object
    *
-   * @apiParam  {NextFunction} next 'Express next Function'
-   *
-   * @apiSuccess (200) {file} file_requested 'video file'
+   * @apiSuccess (200) {file} file_requested Video file
    *
    */
-  public static videos = (req: any, res: Response<any>, next: NextFunction) => {
+  public static videos = (req: any, res: Response<any>) => {
 
     const vid = req.params.vid;
 
@@ -46,16 +45,14 @@ class StreamController{
    * @apiGroup Stream
    * @apiVersion  1.0.0
    *
-   * @apiParam  {Request} req 'Express request object'
+   * @apiParam  {Request} req Express request object
    *
-   * @apiParam  {Response} res 'Express response object'
-   *
-   * @apiParam  {NextFunction} next 'Express next Function'
+   * @apiParam  {Response} res Express response object
    *
    * @apiSuccess (200) {file} file_requested 'image file'
    *
    */
-  public static images = async (req: any, res: Response<any>, next: NextFunction) => {
+  public static images = async (req: any, res: Response<any>) => {
     const img = req.params.img;
 
     const reqPath: string = req.baseUrl.substr(req.baseL).split(img).join('');
@@ -124,13 +121,13 @@ class StreamController{
    * @apiGroup Stream
    * @apiVersion  1.0.0
    *
-   * @apiParam  {Request} req 'Express request object'
+   * @apiParam  {Request} req Express request object
    *
-   * @apiParam  {Response} res 'Express response object'
+   * @apiParam  {Response} res Express response object
    *
-   * @apiParam  {NextFunction} next 'Express next Function'
+   * @apiParam  {NextFunction} next Express next Function
    *
-   * @apiSuccess (200) {file} file_requested 'document file'
+   * @apiSuccess (200) {file} file_requested Document file
    *
    */
   public static documents = (req: any, res: Response<any>, next: NextFunction) => {
@@ -147,18 +144,18 @@ class StreamController{
 
   /**
    *
-   * @api {method} /vid/:vid Video Thumbnail Stream
+   * @api {Route} /vid/:vid Video Thumbnail Stream
    * @apiName file-service-api
    * @apiGroup Stream
    * @apiVersion  1.0.0
    *
-   * @apiParam  {Request} req 'Express request object'
+   * @apiParam  {Request} req Express request object
    *
-   * @apiParam  {Response} res 'Express response object'
+   * @apiParam  {Response} res Express response object
    *
-   * @apiParam  {NextFunction} next 'Express next Function'
+   * @apiParam  {NextFunction} next Express next Function
    *
-   * @apiSuccess (200) {file} file_requested 'video file'
+   * @apiSuccess (200) {file} file_requested Video file
    *
    */
   public static thumbnail = (req: any, res: Response<any>, next: NextFunction) => {
