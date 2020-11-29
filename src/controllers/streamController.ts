@@ -131,7 +131,7 @@ class StreamController{
    *
    */
   public static documents = (req: any, res: Response<any>, next: NextFunction) => {
-    const doc = req.params.doc;
+    const { doc } = req.params;
 
     const reqPath: string = req.baseUrl.substr(req.baseL).split(doc).join('');
 
@@ -159,7 +159,7 @@ class StreamController{
    *
    */
   public static thumbnail = (req: any, res: Response<any>, next: NextFunction) => {
-    const thumb = req.params.thumb;
+    const { thumb } = req.params;
 
     const reqPath: string = req.baseUrl.substr(req.baseL).split(thumb).join('');
 
