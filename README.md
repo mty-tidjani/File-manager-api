@@ -1,22 +1,22 @@
 # File Service API
-This is an api for uploading, streaming and downloading files. Here I assume it is deployed with [SimpleApiGateway](https://github.com/mty-tidjani/SimpleApiGateway) on the same server so I don't check if user is authenticated or not. 
+This is an api for uploading, streaming and downloading files.
+- With image files you can resize directly from the api by adding query parameters like *https?//myhost.com/img/my_image.jpg?w=200&h=200*.
+- With video files on upload the thumbnail is extracted.
 
 ## Stack
 
  1. NodeJs
  2. Typescript
  3. MongoDB
- 4. Mongo
- 5. Express
- 6. Winston
- 7. ApiDoc
- 8. FFMPEG
- 9. Multer
+ 4. Express
+ 5. Winston
+ 6. FFMPEG
+ 7. Multer
 
 ## Start project
 1 - Clone project
 
-    $  git clone https://github.com/mty-tidjani/File-api-service.git 
+    $  git clone https://github.com/mty-tidjani/File-manager-api.git 
 
 2 - Install dependencies
 
@@ -27,10 +27,14 @@ or
 3 - Run Test or check code
  Tslint
 
-     $  npm run tslint
+    $  npm run tslint
 Test
 
-     $  npm run test
+    $  npm run test
+Test with coverage
+
+    $  npm run test:cover
+
 4 - Run app
 
     $  cp .env.example .env
@@ -43,5 +47,5 @@ Modify/Update project to fit your Project needs and...
     $  docker-compose up
 
 
-**- Tidjani** :  Thank you! 
+By **MOMO Tidjani**
 
