@@ -3,14 +3,68 @@ import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs';
 
-import { optimize } from '../utils/imgUtils';
-
+import { optimize } from '../core/utils/imgUtils';
+import { Medium, IMedium } from "../models/Medium";
+import { mediaTCD, mediaSCD } from '../core/constants/type.codes';
+import { accessPaths } from '../core/constants/global';
+import { isArray } from 'util';
+import { FileWithMeta } from '../types';
 /**
  *
  * @class
  *
  */
-class StreamController{
+class Controller{
+
+  public static create = async (req: Request, res: Response<any>, next: NextFunction) => {
+    try {
+      const tempImgs: any[] = [];
+
+
+      if (isArray(req.files)) 
+      req.files.forEach((file: FileWithMeta) => {
+        let more = {
+          tcd: mediaTCD.document,
+          urlPath: accessPaths.docs
+        }
+
+        if (file.mimetype.split('video').length > 1) {
+          more.tcd = mediaTCD.video;
+          more.urlPath = accessPaths.video
+        }else if (file.mimetype.split('image').length > 1) {
+          more.tcd = mediaTCD.image;
+          more.urlPath = accessPaths.image
+        }
+
+        const temp = {
+          tcd: more.tcd,
+          scd: mediaSCD.inUse,
+          url: more.urlPath + '/' + file.filename,
+          fname: file.filename,
+          path: file.path,
+          mimetype: file.mimetype,
+          width: file.meta?.width ? file.meta.width : null,
+          height: file.meta?.height ? file.meta.height : null,
+          size: file.meta?.size ? file.meta.size : null,
+          thumb: file.meta?.thumbnail ? `/thumb/${file.meta.thumbnail}` : null,
+          length: file.meta?.duration ? file.meta.duration : null,
+          ext: file.filename.split('.')[1],
+        };
+
+        tempImgs.push(temp);
+      });
+
+      const data = await Medium.create(tempImgs);
+
+      return res.status(200).json({ data });
+
+    } catch (err) {
+
+      return next(err);
+
+    }
+  }
+
   /**
    *
    * @api {method} /vid/:vid Video_stream
@@ -25,11 +79,13 @@ class StreamController{
    * @apiSuccess (200) {file} file_requested Video file
    *
    */
-  public static videos = (req: any, res: Response<any>) => {
+  public static videos = (req: Request, res: Response<any>) => {
+
+    const { baseL }: any = req;
 
     const vid = req.params.vid;
 
-    const reqPath: string = req.baseUrl.substr(req.baseL).split(vid).join('');
+    const reqPath: string = req.baseUrl.substr(baseL).split(vid).join('');
 
     const dirPath = `./uploads/videos${reqPath}`;
 
@@ -53,9 +109,10 @@ class StreamController{
    *
    */
   public static images = async (req: any, res: Response<any>) => {
-    const img = req.params.img;
+    const { img } = req.params;
+    const { baseL }: any = req;
 
-    const reqPath: string = req.baseUrl.substr(req.baseL).split(img).join('');
+    const reqPath: string = req.baseUrl.substr(baseL).split(img).join('');
 
     const dirPath = `./uploads/images${reqPath}`;
 
@@ -132,8 +189,9 @@ class StreamController{
    */
   public static documents = (req: any, res: Response<any>, next: NextFunction) => {
     const { doc } = req.params;
+    const { baseL }: any = req;
 
-    const reqPath: string = req.baseUrl.substr(req.baseL).split(doc).join('');
+    const reqPath: string = req.baseUrl.substr(baseL).split(doc).join('');
 
     const dirPath = `./uploads/docs${reqPath}`;
 
@@ -160,8 +218,9 @@ class StreamController{
    */
   public static thumbnail = (req: any, res: Response<any>, next: NextFunction) => {
     const { thumb } = req.params;
+    const { baseL }: any = req;
 
-    const reqPath: string = req.baseUrl.substr(req.baseL).split(thumb).join('');
+    const reqPath: string = req.baseUrl.substr(baseL).split(thumb).join('');
 
     const dirPath = `./uploads/${reqPath}`;
 
@@ -173,4 +232,4 @@ class StreamController{
 
 }
 
-export { StreamController };
+export { Controller };

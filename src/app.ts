@@ -1,6 +1,6 @@
 import express from 'express';
-import config from './config/config';
-import { AppRoutes } from './router';
+import config from './core/config/config';
+import { AppRoutes } from './routes';
 
 
 const routes = AppRoutes.initRoutes();
