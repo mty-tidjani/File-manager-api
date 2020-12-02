@@ -1,0 +1,23 @@
+FROM node:12.2.0-alpine
+
+USER root
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm i -g pm2 typescript
+
+RUN npm install
+
+COPY . .
+RUN cp .env.dev .env
+
+
+RUN tsc || true
+
+RUN ls -al
+
+EXPOSE 3012
+
+CMD ["pm2-runtime", "build/app.js"]

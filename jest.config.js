@@ -6,8 +6,7 @@ module.exports = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   coverageDirectory: "coverage",
-  collectCoverageFrom : ["src/**/*.ts"],
-  // collectCoverage: true,
+  collectCoverageFrom : ["src/core/**/*.ts","src/controller/**/*.ts", "src/routes/**/*.ts"],
   coverageThreshold: {
     global: {
       branches: 80,

@@ -4,26 +4,24 @@ import ffmpegStatic from 'ffmpeg-static';
 import ffprobeStatic from 'ffprobe-static';
 import fluentFfmpeg from 'fluent-ffmpeg';
 import { Request, NextFunction, Response } from 'express';
-import { isArray } from 'util';
+import { isArray } from 'lodash';
 import { IMetadata } from '../types';
 
 const storage =  multer.diskStorage({
-  destination: function (req: Request, file: Express.Multer.File, cb) {    
+  destination (req: Request, file: Express.Multer.File, cb) {
     if (file.mimetype.split('video').length > 1) {
-      cb(null, "uploads/videos");
+      cb(null, 'uploads/videos');
     } else if (file.mimetype.split('image').length > 1) {
-      cb(null, "uploads/images");
+      cb(null, 'uploads/images');
     } else {
-      cb(null, "uploads/documents");
+      cb(null, 'uploads/documents');
     }
   },
-  filename: function (req: Request, file: Express.Multer.File, cb) {
-    const fileExt = file.originalname.split(".")[
-      file.originalname.split(".").length - 1
-    ];
+  filename (req: Request, file: Express.Multer.File, cb) {
+    const fileExt = file.originalname.split('.')[file.originalname.split('.').length - 1];
     cb(
       null,
-      ('upload' + '_' + (new Date().getTime()) + "." + fileExt)
+      `upload_${new Date().getTime()}.${fileExt}`,
     );
   },
 });
@@ -56,17 +54,18 @@ const getMetadata = (file: Express.Multer.File) => new Promise<IMetadata | undef
   });
 });
 
-//Exported
+// Exported
 const loadMeta = () => async (req: Request | any , res: Response<any>, next: NextFunction) => {
   const { files } = req;
   fluentFfmpeg.setFfmpegPath(ffmpegStatic);
   fluentFfmpeg.setFfprobePath(ffprobeStatic.path);
-  if (isArray(req.files))
+  if (isArray(req.files)) {
     for (const file of req.files) {
       file.meta = await getMetadata(file);
       if (file.mimetype.split('video').length > 1) file.meta = await saveThumb(file);
     }
+  }
   return next();
 };
 
-export  { fileUpload, loadMeta }
+export  { fileUpload, loadMeta };

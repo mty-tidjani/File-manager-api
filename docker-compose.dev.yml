@@ -1,0 +1,14 @@
+version: "2"
+services:
+  file:
+    container_name: manager
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file:
+        - docker.env
+    ports:
+      - "3012:3012"
+    volumes:
+      - ${UPLOAD_PATH}:/app/uploads

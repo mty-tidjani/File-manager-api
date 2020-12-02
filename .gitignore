@@ -1,8 +1,21 @@
+## 
 /node_modules
-/logs
+
+#Enviroment files
 .env
 .env.prod
+.env.dev
+docker.env
+
+## 
 /dist
 /build
-/doc
 /coverage
+
+##
+/doc
+/logs
+
+## docker
+docker-compose.yml
+docker-compose.prod.yml

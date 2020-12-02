@@ -17,10 +17,7 @@ class AppRoutes {
       next();
     } ,        Controller.images);
 
-    router.get('/play**/:vid', (req: any, res: Response<any>, next: NextFunction) => {
-      req.baseL = '/play'.length;
-      next();
-    } ,        Controller.videos);
+    router.get('/play**/:vid', Controller.videos);
 
     router.get('/thumb**/:thumb', (req: any, res: Response<any>, next: NextFunction) => {
       req.baseL = '/thumb'.length;
