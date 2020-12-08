@@ -26,7 +26,7 @@ const storage =  multer.diskStorage({
   },
 });
 // Exported
-const fileUpload = multer({ storage });
+export const fileUpload = multer({ storage });
 
 const saveThumb = (file: Express.Multer.File) => new Promise((resolve) => {
   fluentFfmpeg(file.path).takeScreenshots({
@@ -55,7 +55,7 @@ const getMetadata = (file: Express.Multer.File) => new Promise<IMetadata | undef
 });
 
 // Exported
-const loadMeta = () => async (req: Request | any , res: Response<any>, next: NextFunction) => {
+export const loadMeta = () => async (req: Request | any , res: Response<any>, next: NextFunction) => {
   const { files } = req;
   fluentFfmpeg.setFfmpegPath(ffmpegStatic);
   fluentFfmpeg.setFfprobePath(ffprobeStatic.path);
@@ -67,5 +67,3 @@ const loadMeta = () => async (req: Request | any , res: Response<any>, next: Nex
   }
   return next();
 };
-
-export  { fileUpload, loadMeta };

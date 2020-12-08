@@ -1,9 +1,10 @@
 import config from '../config/config';
 
-const getMeta = (filePath:string) => {
+export const getMeta = (filePath: string|null) => {
   return new Promise((resolve) => {
+    if (!filePath || filePath.length < 5) return resolve(null);
     config.ffmpeg.ffprobe(filePath, (err: any, metadata: any) => {
-      console.log(err);
+      // console.log(err);
       if (metadata) {
         const meta: any = {};
         meta.width = metadata.streams[0].width;
@@ -15,9 +16,8 @@ const getMeta = (filePath:string) => {
   });
 };
 
-export const optimize = async (options: any, filePath: string) => {
+export const optimize = async (options: any, filePath: string|null) => {
   const meta: any = await getMeta(filePath);
-  console.log('meta ------------', meta);
   if (!meta) return options;
   if (options.width && options.height) {
     if (meta.width >= options.width && meta.height >= options.height) return options;

@@ -30,7 +30,7 @@ or
     $  npm run tslint
 Test
 
-    $  npm run test
+    $  npm test
 Test with coverage
 
     $  npm run test:cover
