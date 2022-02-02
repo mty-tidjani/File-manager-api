@@ -1,4 +1,4 @@
-import config from '../config/config';
+import config from '../../config/config';
 
 const getMeta = (filePath:string) => {
   return new Promise((resolve) => {
@@ -17,7 +17,7 @@ const getMeta = (filePath:string) => {
 
 export const optimize = async (options: any, filePath: string) => {
   const meta: any = await getMeta(filePath);
-  console.log('meta ------------', meta);
+  
   if (!meta) return options;
   if (options.width && options.height) {
     if (meta.width >= options.width && meta.height >= options.height) return options;
